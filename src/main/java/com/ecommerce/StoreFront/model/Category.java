@@ -14,7 +14,7 @@ public class Category {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "category_id",
+    @OneToMany(mappedBy = "category",
                 cascade = CascadeType.ALL,
                 fetch = FetchType.LAZY
     )
