@@ -1,5 +1,6 @@
 package com.ecommerce.StoreFront.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,5 +19,7 @@ public class Category {
                 cascade = CascadeType.ALL,
                 fetch = FetchType.LAZY
     )
+    @JsonIgnore
+
     private Set<Product> products;
 }
