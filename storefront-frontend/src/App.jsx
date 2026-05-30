@@ -28,126 +28,158 @@ function App() {
     .sort((a, b) => sortOrder === "asc" ? a.price - b.price : b.price - a.price);
 
   return (
-    <div style={{ background: "#fff", minHeight: "100vh" }}>
+    <div style={{ background: "#fff", minHeight: "100vh", width: "100%" }}>
 
-      {/* ── Black header bar ───────────────────────────────── */}
+      {/* ── Blue announcement strip ────────────────────── */}
+      <div style={{
+        background: "#2563eb",
+        padding: "6px 32px",
+        textAlign: "center",
+      }}>
+        <span style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: "11px",
+          fontWeight: 600,
+          color: "#bfdbfe",
+          letterSpacing: "1px",
+          textTransform: "uppercase",
+        }}>
+          Free shipping on all orders this week
+        </span>
+      </div>
+
+      {/* ── Black navbar ──────────────────────────────── */}
       <header style={{
         background: "#111",
-        padding: "0 40px",
+        padding: "0 32px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        height: "64px",
+        height: "60px",
         position: "sticky",
         top: 0,
         zIndex: 100,
+        width: "100%",
       }}>
         {/* Logo */}
-        <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
-          <span style={{
-            fontFamily: "'Barlow Condensed', sans-serif",
-            fontSize: "26px",
-            fontWeight: 900,
-            color: "#fff",
-            letterSpacing: "-0.5px",
-            textTransform: "uppercase",
-          }}>
-            STORE
-          </span>
-          <span style={{
-            fontFamily: "'Barlow Condensed', sans-serif",
-            fontSize: "26px",
-            fontWeight: 900,
-            color: "#ff5c35",
-            letterSpacing: "-0.5px",
-            textTransform: "uppercase",
-          }}>
-            FRONT
-          </span>
+        <div style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: "22px",
+          fontWeight: 900,
+          color: "#fff",
+          letterSpacing: "-1px",
+          textTransform: "uppercase",
+        }}>
+          STORE<span style={{ color: "#2563eb" }}>FRONT</span>
         </div>
 
-        {/* Item count pill */}
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-        }}>
+        {/* Right side: label + count pill */}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <span style={{
-            fontFamily: "'Barlow', sans-serif",
+            fontFamily: "'DM Sans', sans-serif",
             fontSize: "11px",
             fontWeight: 600,
-            letterSpacing: "2px",
+            color: "#888",
+            letterSpacing: "0.8px",
             textTransform: "uppercase",
-            color: "#555",
           }}>
-            COLLECTION
+            Premium Collection
           </span>
           <span style={{
-            background: "#ff5c35",
+            background: "#2563eb",
             color: "#fff",
-            fontFamily: "'Barlow', sans-serif",
+            fontFamily: "'DM Sans', sans-serif",
             fontSize: "11px",
             fontWeight: 700,
-            padding: "3px 10px",
+            padding: "3px 11px",
             borderRadius: "20px",
           }}>
-            {filteredProducts.length}
+            {filteredProducts.length} items
           </span>
         </div>
       </header>
 
-      <div className="container py-4">
-
-        {/* ── Error banner ────────────────────────────────── */}
-        {error && (
-          <div className="alert mb-4" style={{
-            background: "#fff5f5",
-            border: "1.5px solid #ff5c35",
-            color: "#cc2200",
-            borderRadius: "8px",
-            fontWeight: 600,
-          }}>
-            ⚠ {error}
-          </div>
-        )}
-
-        {/* ── Toolbar ─────────────────────────────────────── */}
-        <div style={{
-          display: "flex",
-          gap: "10px",
-          marginBottom: "28px",
-          flexWrap: "wrap",
-        }}>
-          <div style={{ minWidth: "140px" }}>
-            <CategoryFilter
-              categories={categories}
-              onSelect={id => setSelectedCategory(id ? Number(id) : null)}
-            />
-          </div>
+      {/* ── Toolbar ───────────────────────────────────── */}
+      <div style={{
+        background: "#f8f8f8",
+        borderBottom: "1px solid #eee",
+        padding: "10px 32px",
+        width: "100%",
+      }}>
+        <div style={{ display:"flex", gap:"10px", alignItems:"center", width:"100%" }}>
+          <CategoryFilter
+            categories={categories}
+            onSelect={id => setSelectedCategory(id ? Number(id) : null)}
+          />
           <input
             type="text"
-            className="form-control"
             placeholder="Search products…"
-            style={{ flex: 1, minWidth: "180px" }}
             onChange={e => setSearchTerm(e.target.value)}
+            style={{
+              flex: "1 1 0%",
+              minWidth: 0,
+              height: "38px",
+              border: "1.5px solid #e2e2e2",
+              borderRadius: "7px",
+              padding: "0 14px",
+              fontSize: "13px",
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 400,
+              color: "#333",
+              background: "#fff",
+              outline: "none",
+            }}
           />
           <select
-            className="form-select"
-            style={{ minWidth: "170px" }}
             onChange={e => setSortOrder(e.target.value)}
+            style={{
+              flexShrink: 0,
+              width: "180px",
+              height: "38px",
+              border: "1.5px solid #e2e2e2",
+              borderRadius: "7px",
+              padding: "0 14px",
+              fontSize: "13px",
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 600,
+              color: "#333",
+              background: "#fff",
+              outline: "none",
+              appearance: "none",
+            }}
           >
             <option value="asc">Price: low to high</option>
             <option value="desc">Price: high to low</option>
           </select>
         </div>
+      </div>
 
-        {/* ── Products ─────────────────────────────────────── */}
+      {/* ── Main content ──────────────────────────────── */}
+      <div style={{ padding: "28px 32px", width: "100%" }}>
+
+        {/* Error banner */}
+        {error && (
+          <div className="alert mb-4" style={{
+            background: "#fff5f5",
+            border: "1.5px solid #fca5a5",
+            color: "#b91c1c",
+            borderRadius: "8px",
+            padding: "12px 16px",
+            marginBottom: "20px",
+          }}>
+            ⚠ {error}
+          </div>
+        )}
+
+        {/* Products */}
         {filteredProducts.length ? (
           <ProductList products={filteredProducts} />
         ) : (
-          <div className="text-center py-5" style={{
-            color: "#bbb",
-            fontSize: "15px",
+          <div style={{
+            textAlign: "center",
+            padding: "60px 0",
+            color: "#ccc",
+            fontSize: "14px",
             fontWeight: 600,
             letterSpacing: "1px",
             textTransform: "uppercase",
@@ -155,7 +187,6 @@ function App() {
             No products found
           </div>
         )}
-
       </div>
     </div>
   );
