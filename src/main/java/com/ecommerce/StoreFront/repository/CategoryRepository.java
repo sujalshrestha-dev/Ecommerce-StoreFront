@@ -1,4 +1,9 @@
 package com.ecommerce.StoreFront.repository;
 
-public class CategoryRepository {
+import com.ecommerce.StoreFront.model.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface CategoryRepository extends JpaRepository<Category, Long> {
 }
